@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nairobi K-Beauty | Luxury Skincare Shop</title>
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #ff2e63;
+  --sec: #08d9d6;
+  --dark: #0a0a23;
+  --light: #fff;
+  --soft: #f9f9f9;
+  --glass: rgba(255,255,255,0.15);
+}
+
+* {
+  margin:0; padding:0; box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body {
+  background: var(--soft);
+  color: var(--dark);
+}
+
+/* HEADER */
+header {
+  background: var(--light);
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+header h1 {
+  color:var(--primary);
+}
+nav a {
+  margin-left:20px;
+  text-decoration:none;
+  color:var(--dark);
+  font-weight:600;
+  transition:0.3s;
+}
+nav a:hover {
+  color:var(--primary);
+}
+
+/* HERO SLIDER */
+.slider {
+  position:relative;
+  height:60vh;
+  overflow:hidden;
+  background:linear-gradient(135deg, #f8cdda,#1d2b64);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-align:center;
+}
+
+.slider h2{
+  font-size:3rem;
+  font-weight:700;
+  letter-spacing:1px;
+}
+.slider p{
+  font-size:1.2rem;
+  margin-top:10px;
+}
+
+/* PRODUCTS */
+.products-section {
+  padding:40px 5%;
+}
+.products-section h2{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:2rem;
+  color:var(--primary);
+}
+
+.products-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+
+.product-card {
+  background:var(--light);
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+.product-card:hover {
+  transform:translateY(-6px);
+}
+.product-card img {
+  width:100%;
+  height:260px;
+  object-fit:cover;
+}
+.product-info {
+  padding:15px 20px;
+}
+.product-info h3{
+  font-size:1.1rem;
+  margin-bottom:8px;
+}
+.product-info p.price{
+  color:var(--primary);
+  font-weight:700;
+  margin-bottom:10px;
+}
+.product-info button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:var(--primary);
+  color:white;
+  font-weight:700;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.product-info button:hover {
+  background:var(--sec);
+}
+
+/* CART */
+.cart-sidebar {
+  position:fixed;
+  right:-450px;
+  top:0;
+  width:380px;
+  height:100%;
+  background:var(--light);
+  padding:20px;
+  box-shadow:-4px 0 12px rgba(0,0,0,0.2);
+  transition:0.4s;
+  z-index:20;
+}
+.cart-sidebar.active{
+  right:0;
+}
+.cart-sidebar h2{
+  margin-bottom:15px;
+  color:var(--primary);
+}
+.cart-item {
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+}
+.cart-total{
+  margin-top:15px;
+  font-weight:700;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  background:var(--dark);
+  color:white;
+  margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Nairobi K-Beauty</h1>
+  <nav>
+    <a href="#shop">Shop</a>
+    <a href="#" onclick="toggleCart()">Cart 🛒</a>
+  </nav>
+</header>
+
+<section class="slider">
+  <div>
+    <h2>Authentic Korean Skincare 🇰🇷</h2>
+    <p>Glow Beautifully. Shop Premium. Shop Nairobi K-Beauty.</p>
+  </div>
+</section>
+
+<section class="products-section" id="shop">
+  <h2>Best Sellers</h2>
+  <div class="products-grid" id="products"></div>
+</section>
+
+<div class="cart-sidebar" id="cart">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <div class="cart-total" id="cart-total"></div>
+  <button style="background:var(--sec);margin-top:15px;width:100%;padding:10px;border:none;color:white;font-weight:700;">Checkout</button>
+</div>
+
+<footer>
+  <p>ViewPark Towers Ground Floor, Nairobi</p>
+  <p>0717 864 249 | NairobiKBeauty.co.ke</p>
+</footer>
+
+<script>
+let products = [
+  {id:1,name:"Glass Skin Hydrating Serum",price:2500,img:"https://via.placeholder.com/300"},
+  {id:2,name:"Vitamin C Brightening Essence",price:2200,img:"https://via.placeholder.com/300"},
+  {id:3,name:"SPF 50 Invisible Sunscreen",price:1800,img:"https://via.placeholder.com/300"},
+  {id:4,name:"Acne Control Repair Cream",price:2000,img:"https://via.placeholder.com/300"},
+  {id:5,name:"Hydrating Sheet Mask (5 Pack)",price:1500,img:"https://via.placeholder.com/300"}
+];
+
+let cart = JSON.parse(localStorage.getItem("nkbeauty_cart"))||[];
+
+function displayProducts(){
+  let container=document.getElementById("products");
+  container.innerHTML="";
+  products.forEach(p=>{
+    container.innerHTML+=`
+    <div class="product-card">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="price">KES ${p.price}</p>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    </div>`;
+  });
+}
+
+function addToCart(id){
+  let prod=products.find(p=>p.id===id);
+  cart.push(prod);
+  localStorage.setItem("nkbeauty_cart",JSON.stringify(cart));
+  renderCart();
+}
+
+function renderCart(){
+  let container=document.getElementById("cart-items");
+  let total=0;
+  container.innerHTML="";
+  cart.forEach(item=>{
+    total+=item.price;
+    container.innerHTML+=`
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <span>KES ${item.price}</span>
+      </div>`;
+  });
+  document.getElementById("cart-total").innerText="Total: KES "+total;
+}
+
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("active");
+}
+
+displayProducts();
+renderCart();
+
+</script>
+
+</body>
+</html>
